@@ -34,10 +34,11 @@ const (
 	RPAREN = ")"
 	LBRACE = "{"
 	RBRACE = "}"
+	COLON  = ":"
 
 	// Keywords
 	FUNCTION = "FUNCTION"
-	LET      = "LET"
+	QUERY    = "?"
 	TRUE     = "TRUE"
 	FALSE    = "FALSE"
 	IF       = "IF"

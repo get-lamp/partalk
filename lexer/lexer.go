@@ -76,6 +76,16 @@ func (l *Lexer) NextToken() token.Token {
 		t = token.Token{Type: token.LPAREN, Literal: string(l.char)}
 	case ')':
 		t = token.Token{Type: token.RPAREN, Literal: string(l.char)}
+	case '{':
+		t = token.Token{Type: token.LBRACE, Literal: string(l.char)}
+	case '}':
+		t = token.Token{Type: token.RBRACE, Literal: string(l.char)}
+	case ':':
+		t = token.Token{Type: token.COLON, Literal: string(l.char)}
+	case ',':
+		t = token.Token{Type: token.COMMA, Literal: string(l.char)}
+	case '?':
+		t = token.Token{Type: token.QUERY, Literal: string(l.char)}
 	default:
 		if isLetter(l.char) {
 			return token.Token{Type: token.IDENT, Literal: l.readIdentifier()}
