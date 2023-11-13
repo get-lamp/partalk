@@ -1,0 +1,7 @@
+set ic {description, pinout}
+
+(set, (ic)
+
+
+ic {inverters > 4, name: %HC%}
+

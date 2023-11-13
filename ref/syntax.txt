@@ -1,0 +1,93 @@
+>> set semiconductor
+>> set trasistor -> semiconductor
+>> set IC
+
+>> IC -> semiconductor
+>> 74HC74 -> IC
+>> IC {description, pinout, quantity}
+
+>> IC <- 74HC04, CD4013
+
+>> 74HC04.description: "Hex inverter"
+>> 74HC04.pinout: {1: VCC, 2: A0, 3: Y0, 4: GND}
+
+
+>> ? IC
+[
+	74HC04: {
+		description: "Hex inverter",
+		pinout: {1: VCC, 2: A0, 3: Y0, 4: GND},
+		quantity: 1
+	},
+	CD4013: {
+		description: None,
+		pinout: None,
+		quantity: 1
+	}
+]
+
+>> ? 74HC04 -> transistor
+false
+
+>> 74hc04(1)
+>> 74hc04++
+>> 74hc04--
+
+>> ? 
+
+[
+	semiconductor: [
+		IC: [
+			74HC04: {
+				description: "Hex inverter",
+				pinout: {1: VCC, 2: A0, 3: Y0, 4: GND},
+				quantity: 3
+			},
+			CD4013: {
+				description: None,
+				pinout: None,
+				quantity: 1
+			}
+		],
+		transistor: []
+	]
+]
+
+>> ? IC
+[
+	74HC04: {
+		description: "Hex inverter",
+		pinout: {1: VCC, 2: A0, 3: Y0, 4: GND},
+		quantity: 3
+	},
+	CD4013: {
+		description: None,
+		pinout: None,
+		quantity: 1
+	}
+]
+
+
+
+>> set resistor
+>> resistor {tolerance}
+
+>> resistor 10K {tolerance: 5%}
+>> resistor 10K {tolerance: 10%}
+
+>> ? resistor
+[
+	10K: {
+		tolerance: 5%
+	},
+	10K: {
+		tolerance: 10%
+	}
+]
+
+
+7404 {..., &74HC04}
+
+
+
+
