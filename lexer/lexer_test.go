@@ -6,7 +6,7 @@ import (
 )
 
 func TestReadChar(t *testing.T) {
-	line := "A line of text"
+	line := "foo {bar: baz, qux: fum}"
 	lex := New(line)
 
 	for c := 0; c < len(line); c++ {

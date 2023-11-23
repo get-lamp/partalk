@@ -25,6 +25,8 @@ const (
 	SHIFT_LEFT  = "<<"
 	INC         = "++"
 	DEC         = "--"
+	RIGHT       = "->"
+	LEFT        = "<-"
 
 	// Delimiters
 	COMMA     = ","
@@ -35,6 +37,7 @@ const (
 	LBRACE = "{"
 	RBRACE = "}"
 	COLON  = ":"
+	QUOTE  = "\""
 
 	// Keywords
 	FUNCTION = "FUNCTION"

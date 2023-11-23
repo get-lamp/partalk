@@ -15,18 +15,18 @@ type Expression interface {
 	StatementNode()
 }
 
-type Property struct {
+type Attribute struct {
 	Name  string
 	Value string
 }
 
-type Entity struct {
-	Properties []Property
+type Object struct {
+	Attributes []Attribute
 }
 
 type Identifier struct {
 	Token token.Token
-	Value Entity
+	Value Object
 }
 
 func (i *Identifier) expressionNode() {}
@@ -37,8 +37,8 @@ func (i *Identifier) TokenLiteral() string {
 type SetStatement struct {
 	Node
 	Statement
-	Token token.Token
 	Name  string
+	Token token.Token
 	Value Expression
 }
 
@@ -46,10 +46,6 @@ func (ss *SetStatement) statementNode() {}
 
 func (ss *SetStatement) TokenLiteral() string {
 	return ss.Token.Literal
-}
-
-type Element struct {
-	identifier string
 }
 
 type Program struct {
@@ -62,4 +58,10 @@ func (p *Program) TokenLiteral() string {
 	} else {
 		return ""
 	}
+}
+
+type QueryStatement struct {
+	Node
+	Statement
+	Object Object
 }
