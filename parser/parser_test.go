@@ -44,3 +44,13 @@ func TestParseNestedObject(t *testing.T) {
 
 	}
 }
+
+func TestParseDotNotation(t *testing.T) {
+	l := lexer.New("something.blop")
+	p := New(l)
+	program := p.ParseProgram()
+
+	if program == nil {
+
+	}
+}

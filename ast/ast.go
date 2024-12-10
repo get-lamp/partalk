@@ -2,6 +2,19 @@ package ast
 
 import "partalk/token"
 
+type Attribute struct {
+	Name  string
+	Value string
+}
+
+type Object struct {
+	Attributes []Attribute
+}
+
+func (o *Object) TokenLiteral() string {
+	return ""
+}
+
 type Node interface {
 	TokenLiteral() string
 }
@@ -12,21 +25,12 @@ type Statement interface {
 
 type Expression interface {
 	Node
-	StatementNode()
-}
-
-type Attribute struct {
-	Name  string
-	Value string
-}
-
-type Object struct {
-	Attributes []Attribute
 }
 
 type Identifier struct {
-	Token token.Token
-	Value Object
+	Token  token.Token
+	Parent *Identifier
+	Child  *Identifier
 }
 
 func (i *Identifier) expressionNode() {}
@@ -34,18 +38,28 @@ func (i *Identifier) TokenLiteral() string {
 	return i.Token.Literal
 }
 
-type SetStatement struct {
+type DeclareStatement struct {
 	Node
 	Statement
 	Name  string
 	Token token.Token
-	Value Expression
 }
 
-func (ss *SetStatement) statementNode() {}
+func (ss *DeclareStatement) statementNode() {}
 
-func (ss *SetStatement) TokenLiteral() string {
+func (ss *DeclareStatement) TokenLiteral() string {
 	return ss.Token.Literal
+}
+
+type AssignStatement struct {
+	Left  Identifier
+	Right Object
+}
+
+func (as *AssignStatement) statementNode() {}
+
+func (as *AssignStatement) TokenLiteral() string {
+	return as.Left.Token.Literal
 }
 
 type Program struct {

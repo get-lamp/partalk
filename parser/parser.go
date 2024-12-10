@@ -61,11 +61,44 @@ func (p *Parser) ParseProgram() *ast.Program {
 func (p *Parser) parseStatement() ast.Statement {
 	switch p.currToken.Type {
 	case token.IDENT:
-		return p.parseIdentifier()
+
+		identifier := p.parseIdentifier(nil)
+
+		switch p.peekToken.Type {
+		case token.EOF:
+			return &ast.DeclareStatement{Token: p.currToken, Name: p.currToken.Literal}
+		case token.LBRACE:
+			p.nextToken()
+			return &ast.AssignStatement{Left: *identifier, Right: p.parseObject()}
+		default:
+			panic("Unexpected token while parsing statement [identifier]")
+		}
 	case token.QUERY:
-		return p.parseQuery()
+		panic("Not implemented")
 	default:
 		return nil
+	}
+}
+
+func (p *Parser) parseIdentifier(parent *ast.Identifier) *ast.Identifier {
+
+	identifier := ast.Identifier{Token: p.currToken}
+
+	if parent != nil {
+		identifier.Parent = parent
+	}
+
+	switch p.peekToken.Type {
+
+	case token.DOT:
+		p.nextToken()
+		if !p.expectPeek(token.IDENT) {
+			panic("Missing attribute")
+		}
+		identifier.Child = p.parseIdentifier(&identifier)
+		return &identifier
+	default:
+		return &identifier
 	}
 }
 
@@ -73,6 +106,7 @@ func (p *Parser) parseQueryStatement() ast.QueryStatement {
 	return ast.QueryStatement{}
 }
 
+/*
 func (p *Parser) parseQuery() ast.Statement {
 	if !p.currTokenIs(token.QUERY) {
 		panic("Expected ? symbol.")
@@ -91,21 +125,7 @@ func (p *Parser) parseQuery() ast.Statement {
 
 	return query
 }
-
-func (p *Parser) parseIdentifier() ast.Statement {
-
-	identifier := p.currToken
-
-	switch p.peekToken.Type {
-	case token.EOF:
-		return &ast.SetStatement{Token: p.currToken, Name: p.currToken.Literal, Value: nil}
-	case token.LBRACE:
-		p.nextToken()
-		return &ast.Identifier{identifier, p.parseObject()}
-	default:
-		panic("Unexpected token while parsing identifier")
-	}
-}
+*/
 
 func (p *Parser) parseQuote(delimiters []token.TokenType) string {
 	var quote = ""
